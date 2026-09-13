@@ -332,7 +332,7 @@ If you'd like to train **RT-DETRv4** on COCO2017 with an input size of 320x320, 
 1.  Setup
 
     ```shell
-    pip install onnx onnxsim
+    pip install onnx onnxsim onnxscript
     ```
 
 2.  Export onnx
@@ -344,8 +344,14 @@ If you'd like to train **RT-DETRv4** on COCO2017 with an input size of 320x320, 
 3.  Export [tensorrt](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html)
 
     ```shell
-    trtexec --onnx="model.onnx" --saveEngine="model.engine" --fp16
+    trtexec --onnx="model.onnx" --saveEngine="model.engine"
     ```
+
+    > **Note:** On TensorRT 10.x/11.x, `trtexec` builds strongly-typed networks by
+    > default and no longer accepts the `--fp16` builder flag (`Unknown option: --fp16`).
+    > Precision now follows the types declared in the ONNX graph itself; drop the flag
+    > as shown above. If you're on an older TensorRT release that still uses the
+    > weakly-typed builder, `--fp16` is still valid there.
 
 </details>
 

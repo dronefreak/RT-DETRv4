@@ -100,7 +100,7 @@ def process_video(model, device, file_path):
 
     cap.release()
     out.release()
-    print("Video processing complete. Result saved as 'results_video.mp4'.")
+    print("Video processing complete. Result saved as 'torch_results.mp4'.")
 
 
 def main(args):

@@ -50,6 +50,12 @@ def main(args, ):
             return outputs
 
     model = Model()
+    # self.model / self.postprocessor are already in eval mode via .deploy(), but
+    # the wrapper itself defaults to training=True since it's never had .eval()
+    # called on it directly; that stale flag is what triggers torch.onnx.export's
+    # "exporting a model in training mode" warning even though nothing above
+    # actually runs in training mode.
+    model.eval()
 
     data = torch.rand(32, 3, 640, 640)
     size = torch.tensor([[640, 640]])

@@ -151,7 +151,7 @@ def process_image(m, file_path, device):
     output = m(blob)
     result_images = draw([im_pil], output['labels'], output['boxes'], output['scores'])
     result_images[0].save('trt_result.jpg')
-    print("Image processing complete. Result saved as 'result.jpg'.")
+    print("Image processing complete. Result saved as 'trt_result.jpg'.")
 
 def process_video(m, file_path, device):
     cap = cv2.VideoCapture(file_path)
@@ -207,7 +207,7 @@ def process_video(m, file_path, device):
 
     cap.release()
     out.release()
-    print("Video processing complete. Result saved as 'result_video.mp4'.")
+    print("Video processing complete. Result saved as 'trt_result.mp4'.")
 
 if __name__ == '__main__':
     import argparse

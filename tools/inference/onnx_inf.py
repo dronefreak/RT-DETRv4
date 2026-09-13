@@ -73,7 +73,7 @@ def process_image(sess, im_pil):
         [ratio], [(pad_w, pad_h)]
     )
     result_images[0].save('onnx_result.jpg')
-    print("Image processing complete. Result saved as 'result.jpg'.")
+    print("Image processing complete. Result saved as 'onnx_result.jpg'.")
 
 
 def process_video(sess, video_path):
@@ -133,7 +133,7 @@ def process_video(sess, video_path):
 
     cap.release()
     out.release()
-    print("Video processing complete. Result saved as 'result.mp4'.")
+    print("Video processing complete. Result saved as 'onnx_result.mp4'.")
 
 
 def main(args):
