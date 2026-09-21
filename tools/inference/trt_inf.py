@@ -138,7 +138,7 @@ def process_image(m, file_path, device):
     orig_size = torch.tensor([w, h])[None].to(device)
 
     transforms = T.Compose([
-        T.Resize((640, 640)),
+        T.Resize(tuple(m.bindings['images'].shape[2:])),
         T.ToTensor(),
     ])
     im_data = transforms(im_pil)[None]
@@ -166,7 +166,7 @@ def process_video(m, file_path, device):
     out = cv2.VideoWriter('trt_result.mp4', fourcc, fps, (orig_w, orig_h))
 
     transforms = T.Compose([
-        T.Resize((640, 640)),
+        T.Resize(tuple(m.bindings['images'].shape[2:])),
         T.ToTensor(),
     ])
 

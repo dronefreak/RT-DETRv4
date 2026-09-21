@@ -51,9 +51,14 @@ def draw(images, labels, boxes, scores, ratios, paddings, thrh=0.4):
     return result_images
 
 
+def model_input_size(sess):
+    """Static square side of the exported model's `images` input (640 for stock COCO exports)."""
+    return sess.get_inputs()[0].shape[2]
+
+
 def process_image(sess, im_pil):
     # Resize image while preserving aspect ratio
-    resized_im_pil, ratio, pad_w, pad_h = resize_with_aspect_ratio(im_pil, 640)
+    resized_im_pil, ratio, pad_w, pad_h = resize_with_aspect_ratio(im_pil, model_input_size(sess))
     orig_size = torch.tensor([[resized_im_pil.size[1], resized_im_pil.size[0]]])
 
     transforms = T.Compose([
@@ -99,7 +104,7 @@ def process_video(sess, video_path):
         frame_pil = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
         # Resize frame while preserving aspect ratio
-        resized_frame_pil, ratio, pad_w, pad_h = resize_with_aspect_ratio(frame_pil, 640)
+        resized_frame_pil, ratio, pad_w, pad_h = resize_with_aspect_ratio(frame_pil, model_input_size(sess))
         orig_size = torch.tensor([[resized_frame_pil.size[1], resized_frame_pil.size[0]]])
 
         transforms = T.Compose([

@@ -57,8 +57,11 @@ def main(args, ):
     # actually runs in training mode.
     model.eval()
 
-    data = torch.rand(32, 3, 640, 640)
-    size = torch.tensor([[640, 640]])
+    # eval_spatial_size is (height, width); the encoder's position embedding is
+    # precomputed for it, so tracing at any other size fails. 640 for stock COCO configs.
+    height, width = cfg.yaml_cfg.get('eval_spatial_size') or [640, 640]
+    data = torch.rand(32, 3, height, width)
+    size = torch.tensor([[width, height]])
     _ = model(data, size)
 
     dynamic_axes = {
